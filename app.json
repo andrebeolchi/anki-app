@@ -18,7 +18,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.fiap.anki"
+      "bundleIdentifier": "com.fiap.anki",
+      "appleTeamId": "S79TF7DTJA"
     },
     "android": {
       "adaptiveIcon": {
