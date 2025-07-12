@@ -1,5 +1,8 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
+# editor
+.vscode/
+
 # dependencies
 node_modules/
 
@@ -15,6 +18,8 @@ web-build/
 *.p12
 *.key
 *.mobileprovision
+android/
+ios/
 
 # Metro
 .metro-health-check*
