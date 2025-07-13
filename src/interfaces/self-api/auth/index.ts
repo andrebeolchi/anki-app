@@ -22,11 +22,16 @@ import {
   removeAuthorizationHeader,
   setAuthorizationHeader,
 } from "~/interfaces/self-api/client";
+import { Platform } from "react-native";
+
+const clientIds = {
+  android: process.env.EXPO_PUBLIC_ANDROID_GOOGLE_CLIENT_ID!,
+  ios: process.env.EXPO_PUBLIC_IOS_GOOGLE_CLIENT_ID!,
+};
 
 // Endpoint
 const oauthParams = {
-  clientId:
-    "967472276923-rntnvcjan1pt3tb8et39v8230nu4oqb7.apps.googleusercontent.com",
+  clientId: clientIds[Platform.OS as "ios" | "android"],
   scopes: ["openid", "profile", "email"],
   redirectUri: makeRedirectUri({
     scheme: "com.fiap.anki",

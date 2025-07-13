@@ -24,10 +24,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.fiap.anki",
-      "clientIds": {
-        "google": "967472276923-rntnvcjan1pt3tb8et39v8230nu4oqb7.apps.googleusercontent.com"
-      }
+      "package": "com.fiap.anki"
     },
     "web": {
       "bundler": "metro",
