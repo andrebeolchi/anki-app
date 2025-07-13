@@ -1,6 +1,17 @@
-import { Redirect } from 'expo-router'
-import React from 'react'
+import { Redirect } from "expo-router";
 
-export default function RootLayout() {
-  return <Redirect href='/deck/1' />
+import { useAuth } from "~/components/auth";
+
+import SignInScreen from "./(anon)/sign-in";
+
+export default function GeneralLayout() {
+  const { user } = useAuth();
+
+  console.log(user);
+
+  if (!user) {
+    return <SignInScreen />;
+  }
+
+  return <Redirect href="/deck/1" />;
 }
