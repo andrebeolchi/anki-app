@@ -15,5 +15,5 @@ export default function GeneralLayout() {
     return <Redirect href='/login' />
   }
 
-  return <Redirect href='/deck/1' />
+  return <Redirect href='/home' />
 }
