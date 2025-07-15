@@ -28,6 +28,7 @@ yarn-error.*
 .DS_Store
 *.pem
 
+.env
 # local env files
 .env*.local
 
@@ -39,3 +40,9 @@ yarn-error.*
 
 expo-env.d.ts
 # @end expo-cli
+
+# end of expo-cli generated patterns
+
+# native folders
+android/
+ios/
