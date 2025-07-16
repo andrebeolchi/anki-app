@@ -1,9 +1,9 @@
 import { Tabs } from 'expo-router';
-import { LucideHome } from 'lucide-react-native';
+import { LucideHome, LucideLibrarySquare } from 'lucide-react-native';
 import React from 'react';
 import { withClassName } from '~/lib/with-classname';
 
-withClassName([LucideHome])
+withClassName([LucideHome, LucideLibrarySquare])
 
 export default function TabLayout() {
   return (
@@ -12,7 +12,15 @@ export default function TabLayout() {
         name="home/index"
         options={{
           title: 'Início',
-          tabBarIcon: ({ color }) => <LucideHome size={28} color={color} />,
+          tabBarIcon: (props) => <LucideHome {...props} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="library/index"
+        options={{
+          title: 'Biblioteca',
+          tabBarIcon: (props) => <LucideLibrarySquare {...props} />,
         }}
       />
     </Tabs>
