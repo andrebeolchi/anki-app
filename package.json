@@ -13,6 +13,7 @@
     "postinstall": "npx tailwindcss -i ./src/global.css -o ./node_modules/.cache/nativewind/global.css"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
     "@react-navigation/native": "^7.0.0",
     "@rn-primitives/avatar": "~1.2.0",
     "@rn-primitives/label": "^1.2.0",
@@ -20,6 +21,7 @@
     "@rn-primitives/progress": "~1.2.0",
     "@rn-primitives/separator": "^1.2.0",
     "@rn-primitives/slot": "~1.2.0",
+    "@rn-primitives/switch": "^1.2.0",
     "@rn-primitives/tooltip": "~1.2.0",
     "@tanstack/query-async-storage-persister": "^5.82.0",
     "@tanstack/react-query": "^5.82.0",
@@ -41,17 +43,21 @@
     "nativewind": "^4.1.23",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-hook-form": "^7.60.0",
     "react-native": "0.79.5",
     "react-native-gesture-handler": "^2.27.1",
+    "react-native-keyboard-controller": "^1.17.5",
     "react-native-mmkv": "^3.3.0",
     "react-native-reanimated": "~3.17.5",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "^4.10.0",
     "react-native-svg": "15.11.2",
+    "react-native-toast-message": "^2.3.3",
     "react-native-web": "~0.20.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "3.3.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

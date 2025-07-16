@@ -2,6 +2,7 @@ import { Link, useRouter } from 'expo-router';
 import { Eye, EyeClosed } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { ActivityIndicator, Pressable, View } from 'react-native';
+import { toast } from '~/components/kit/toast';
 
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
@@ -28,6 +29,7 @@ export default function LoginScreen() {
       await mutateAsync({ email, password })
       router.navigate('/')
     } catch (error) {
+      toast.error("Email ou senha inválidos")
       console.log(error)
     }
   }

@@ -7,7 +7,7 @@ function Input({
   placeholderClassName,
   ...props
 }: TextInputProps & {
-  ref?: React.RefObject<TextInput>;
+  ref?: React.RefCallback<TextInput>;
 }) {
   return (
     <TextInput

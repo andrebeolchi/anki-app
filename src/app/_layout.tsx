@@ -1,16 +1,20 @@
 import '~/global.css';
 
-import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
-import { Slot } from 'expo-router';
+import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useLayoutEffect } from 'react';
 import { Appearance, Platform } from 'react-native';
-import { NAV_THEME } from '~/lib/constants';
-import { useColorScheme } from '~/lib/use-color-scheme';
-import { PortalHost } from '@rn-primitives/portal';
-import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
+import { KeyboardProvider } from "react-native-keyboard-controller";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { PortalHost } from '@rn-primitives/portal';
+import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
+
+import { NAV_THEME } from '~/lib/constants';
+import { useColorScheme } from '~/lib/useColorScheme';
+import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { QueryProvider } from '~/components/query-provider';
+import { ToastProvider } from '~/components/kit/toast';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -36,19 +40,24 @@ const usePlatformSpecificSetup = Platform.select({
 
 export default function RootLayout() {
   usePlatformSpecificSetup();
+
   const { isDarkColorScheme } = useColorScheme();
+  const { bottom, top } = useSafeAreaInsets()
 
   return (
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
       <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
       <GestureHandlerRootView>
-        <QueryProvider>
-          <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-            <Slot />
-            <PortalHost />
-          </ThemeProvider>
-        </QueryProvider>
+        <KeyboardProvider>
+          <QueryProvider>
+            <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+              <Stack screenOptions={{ headerShown: false }} />
+              <ToastProvider bottomOffset={bottom + 16} topOffset={top + 16} />
+              <PortalHost />
+            </ThemeProvider>
+          </QueryProvider>
+        </KeyboardProvider>
       </GestureHandlerRootView>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }

@@ -15,7 +15,7 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "nativewind-env.d.ts"
-  ],
+, "src/lib/focus-after-render.t"  ],
   "exclude": [
     "node_modules",
     "src/components/*.tsx"

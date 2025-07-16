@@ -41,7 +41,7 @@ export const AuthHeader = () => {
   const LogoutIcon = status === 'pending' ? ActivityIndicator : LucideLogOut;
 
   return (
-    <View className='flex-row items-center justify-center p-6 border-b bg-background border-b-border pt-safe-offset-6'>
+    <View className='flex-row items-center justify-center gap-3 p-6 border-b bg-background border-b-border pt-safe-offset-6'>
       <View className='flex-1'>
         <Text className='text-sm'>
           {greetings()}

@@ -1,6 +1,11 @@
+import { Link } from 'expo-router';
+import { LucidePlus } from 'lucide-react-native';
 import React from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { Text } from '~/components/ui/text';
+import { withClassName } from '~/lib/with-classname';
+
+withClassName(LucidePlus)
 
 export default function LibraryScreen() {
   const deck = {
@@ -19,6 +24,15 @@ export default function LibraryScreen() {
           {deck.description}
         </Text>
       </View>
+
+      <Link
+        href="/decks/create"
+        asChild
+      >
+        <Pressable className='absolute p-6 rounded-full bottom-6 right-6 bg-primary'>
+          <LucidePlus size={24} className='text-primary-foreground' />
+        </Pressable>
+      </Link>
     </View>
   );
 }
