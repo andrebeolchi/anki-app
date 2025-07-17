@@ -1,18 +1,31 @@
-import { Link, Stack } from 'expo-router';
+import { Link } from 'expo-router';
+import React from 'react';
 import { View } from 'react-native';
+import { Button } from '~/components/ui/button';
+
 import { Text } from '~/components/ui/text';
 
 export default function NotFoundScreen() {
   return (
-    <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <View>
-        <Text>This screen doesn't exist.</Text>
+    <View className='justify-center flex-1 gap-6 p-safe-offset-6'>
+      <View className='gap-3'>
+        <Text className='text-3xl font-bold'>
+          Oops! Essa página não existe.
+        </Text>
 
-        <Link href='/'>
-          <Text>Go to home screen!</Text>
-        </Link>
+        <Text className='text-muted-foreground'>
+          A página que você está tentando acessar não existe ou foi removida.
+        </Text>
       </View>
-    </>
+
+
+      <Link href='/' asChild>
+        <Button>
+          <Text>
+            Voltar para a página inicial
+          </Text>
+        </Button>
+      </Link>
+    </View >
   );
 }
