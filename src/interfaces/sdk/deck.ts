@@ -28,3 +28,29 @@ export const createDeck = async (body: ICreateDeckPayload): Promise<ICreateDeckR
 
   return data;
 }
+
+export interface IGetDecksQuery {
+  status?: "public" | "private";
+  creatorId?: string;
+}
+
+export interface IGetDecksResponse {
+  id: string;
+  title: string;
+  status: "public" | "private";
+  description?: string;
+  creator: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  _count: {
+    cards: number;
+  }
+}
+
+export const getDecks = async (query?: IGetDecksQuery): Promise<IGetDecksResponse[]> => {
+  const { data } = await fetch.get("/decks", { params: query });
+
+  return data;
+}
