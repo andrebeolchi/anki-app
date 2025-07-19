@@ -1,7 +1,7 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strict": true,
     "baseUrl": ".",
     "paths": {
@@ -14,10 +14,8 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "nativewind-env.d.ts"
-, "src/lib/focus-after-render.t"  ],
-  "exclude": [
-    "node_modules",
-    "src/components/*.tsx"
-  ]
+    "nativewind-env.d.ts",
+    "src/lib/focus-after-render.t"
+  ],
+  "exclude": ["node_modules", "src/components/*.tsx"]
 }

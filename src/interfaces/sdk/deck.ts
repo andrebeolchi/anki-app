@@ -1,3 +1,4 @@
+import { IDeck } from "~/models/deck";
 import { fetch } from ".";
 
 export interface ICreateDeckPayload {
@@ -23,18 +24,20 @@ export interface ICreateDeckResponse {
   }[];
 }
 
-export const createDeck = async (body: ICreateDeckPayload): Promise<ICreateDeckResponse> => {
+export const createDeck = async (
+  body: ICreateDeckPayload
+): Promise<ICreateDeckResponse> => {
   const { data } = await fetch.post("/decks", body);
 
   return data;
-}
+};
 
 export interface IGetDecksQuery {
   status?: "public" | "private";
   creatorId?: string;
 }
 
-export interface IGetDecksResponse {
+export interface IGetDecksResponse extends IDeck {
   id: string;
   title: string;
   status: "public" | "private";
@@ -44,13 +47,14 @@ export interface IGetDecksResponse {
     name: string;
     email: string;
   };
-  _count: {
-    cards: number;
-  }
+  cardsCount: number;
+  enrolled: boolean;
 }
 
-export const getDecks = async (query?: IGetDecksQuery): Promise<IGetDecksResponse[]> => {
+export const getDecks = async (
+  query?: IGetDecksQuery
+): Promise<IGetDecksResponse[]> => {
   const { data } = await fetch.get("/decks", { params: query });
 
   return data;
-}
+};
