@@ -3,6 +3,7 @@ import {
   LucideBookOpen,
   LucideClock,
   LucideFlame,
+  LucideGlasses,
   LucidePlay,
 } from "lucide-react-native";
 import { useState } from "react";
@@ -19,11 +20,14 @@ import { IGetUserDecksResponse } from "~/interfaces/sdk/user-deck";
 import { Link } from "expo-router";
 import { withClassName } from "~/lib/with-classname";
 
-withClassName(LucidePlay);
-withClassName(LucideArchive);
-withClassName(LucideBookOpen);
-withClassName(LucideClock);
-withClassName(LucideFlame);
+withClassName([
+  LucidePlay,
+  LucideArchive,
+  LucideBookOpen,
+  LucideClock,
+  LucideFlame,
+  LucideGlasses,
+])
 
 const UserDeckCard = ({ deck }: { deck: IGetUserDecksResponse }) => {
   const { mutateAsync } = useChangeUserDeck({
@@ -38,10 +42,10 @@ const UserDeckCard = ({ deck }: { deck: IGetUserDecksResponse }) => {
   return (
     <Card
       key={deck.id}
-      className="bg-white shadow-sm transition-shadow hover:shadow-md"
+      className="transition-shadow bg-white shadow-sm hover:shadow-md"
     >
       <CardHeader>
-        <View className="flex flex-row justify-between items-center">
+        <View className="flex flex-row items-center justify-between">
           <View className="flex-1">
             <CardTitle className="font-bold text-gray-900">
               <Text className="text-xl" numberOfLines={1}>
@@ -65,13 +69,13 @@ const UserDeckCard = ({ deck }: { deck: IGetUserDecksResponse }) => {
         {deck.enrollment.status === "active" && (
           <>
             {deck.enrollment.lastStudyAt && (
-              <View className="flex flex-row gap-4 justify-between items-center mb-4 w-full text-sm text-gray-600">
-                <View className="flex flex-row gap-1 items-center">
+              <View className="flex flex-row items-center justify-between w-full gap-4 mb-4 text-sm text-gray-600">
+                <View className="flex flex-row items-center gap-1">
                   <LucideFlame size={16} className="text-muted-foreground" />
                   <Text>{deck.enrollment.currentStreak} dias</Text>
                 </View>
 
-                <View className="flex flex-row gap-1 items-center">
+                <View className="flex flex-row items-center gap-1">
                   <LucideClock size={16} className="text-muted-foreground" />
                   <Text className="text-muted-foreground">
                     {deck.enrollment.lastStudyAt?.toLocaleDateString()}
@@ -80,10 +84,10 @@ const UserDeckCard = ({ deck }: { deck: IGetUserDecksResponse }) => {
               </View>
             )}
 
-            <View className="flex flex-row gap-2 w-full">
+            <View className="flex flex-row w-full gap-2">
               <Link href={`/decks/${deck.id}`} asChild>
                 <Button className="flex flex-row flex-1 gap-3">
-                  <LucidePlay className="w-4 h-4" color="white" />
+                  <LucideGlasses size={20} className="color-white" />
                   <Text>Estudar</Text>
                 </Button>
               </Link>
@@ -98,7 +102,7 @@ const UserDeckCard = ({ deck }: { deck: IGetUserDecksResponse }) => {
                 }
                 className="flex flex-row gap-2 aspect-square"
               >
-                <LucideArchive className="w-4 h-4 color-black" />
+                <LucideArchive size={20} className="color-black" />
               </Button>
             </View>
           </>
@@ -135,19 +139,19 @@ export default function HomeScreen() {
     <Tabs
       value={tab}
       onValueChange={(value) => setTab(value)}
-      className="p-4 w-full"
+      className="w-full p-4"
     >
-      <TabsList className="flex flex-row mb-6 w-full">
+      <TabsList className="flex flex-row w-full mb-6">
         <TabsTrigger
           value="active"
-          className="flex flex-row flex-1 gap-2 items-center"
+          className="flex flex-row items-center flex-1 gap-2"
         >
           <LucidePlay className="w-4 h-4" />
           <Text>Ativos ({activeDecks?.length})</Text>
         </TabsTrigger>
         <TabsTrigger
           value="archived"
-          className="flex flex-row flex-1 gap-2 items-center"
+          className="flex flex-row items-center flex-1 gap-2"
         >
           <LucideArchive className="w-4 h-4" />
           <Text>Arquivados ({archivedDecks?.length})</Text>
@@ -156,13 +160,13 @@ export default function HomeScreen() {
 
       <TabsContent value="active">
         <FlatList
-          className="overflow-visible gap-4"
+          className="gap-4 overflow-visible"
           data={activeDecks}
           ItemSeparatorComponent={() => <View className="h-4" />}
           renderItem={({ item }) => <UserDeckCard key={item.id} deck={item} />}
           ListEmptyComponent={
             <Card className="py-0 text-center">
-              <CardContent className="flex flex-col gap-4 justify-center items-center py-8">
+              <CardContent className="flex flex-col items-center justify-center gap-4 py-8">
                 <LucideBookOpen size={48} className="mb-4" color="gray" />
                 <Text className="text-xl text-gray-500">Nenhum deck ativo</Text>
                 <Link href="/library" asChild>
@@ -184,7 +188,7 @@ export default function HomeScreen() {
           renderItem={({ item }) => <UserDeckCard key={item.id} deck={item} />}
           ListEmptyComponent={
             <Card className="py-0 text-center">
-              <CardContent className="flex flex-col gap-4 justify-center items-center py-8">
+              <CardContent className="flex flex-col items-center justify-center gap-4 py-8">
                 <LucideArchive size={48} className="mb-4" color="gray" />
                 <Text className="text-xl text-gray-500">
                   Nenhum deck arquivado
