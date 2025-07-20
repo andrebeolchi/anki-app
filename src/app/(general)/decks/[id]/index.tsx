@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { LucideArrowLeftFromLine, LucideArrowRightFromLine, LucideCheck, LucideUndo2, LucideX } from 'lucide-react-native';
 import { cssInterop } from 'nativewind';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Pressable,
@@ -114,6 +114,8 @@ type FormType = z.infer<typeof schema>;
 
 export default function DeckCardsScreen() {
   const params = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
+
   const { data: session } = useGetStudySession({ deckId: params?.id });
 
   const [isEndReached, setIsEndReached] = useState<boolean>(false)
@@ -152,6 +154,7 @@ export default function DeckCardsScreen() {
   const { mutate } = useSaveStudySession({
     onSuccess: () => {
       toast.success("Sessão de estudos salva com sucesso!");
+      router.canGoBack() ? router.back() : router.push('/');
     },
     onError: (error) => {
       onSubmitError(error);
@@ -165,7 +168,7 @@ export default function DeckCardsScreen() {
       toast.error("Você precisa responder pelo menos um cartão.");
       return;
     }
-    
+
     mutate({
       deckId: data.deckId,
       answers
@@ -188,7 +191,7 @@ export default function DeckCardsScreen() {
       <View className='w-full'>
         <Button onPress={handleSubmit(onSubmit, onSubmitError)}>
           <Text>
-            Salvar sessão
+            Finalizar estudo
           </Text>
         </Button>
       </View>

@@ -7,7 +7,7 @@ import {
 } from "~/interfaces/sdk/user-deck";
 import { QUERY_KEY as DECKS_QUERY_KEY } from "~/modules/deck";
 
-const QUERY_KEY = "user-decks";
+export const QUERY_KEY = "user-decks";
 
 export interface ICreateUserDeckOptions {
   onSuccess?: (data: any) => void;

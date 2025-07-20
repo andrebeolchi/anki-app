@@ -2,7 +2,7 @@ import '~/global.css';
 
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import React, { useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { Appearance, Platform } from 'react-native';
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -15,6 +15,13 @@ import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { QueryProvider } from '~/components/query-provider';
 import { ToastProvider } from '~/components/kit/toast';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import dayjs from "dayjs";
+import relativeTime from 'dayjs/plugin/relativeTime';
+import ptbr from "dayjs/locale/pt-br";
+
+dayjs.extend(relativeTime);
+dayjs.locale(ptbr);
 
 export { ErrorBoundary } from 'expo-router';
 

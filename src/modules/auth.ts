@@ -6,7 +6,7 @@ import { removeAuthorizationHeader, setAuthorizationHeader } from "~/interfaces/
 import { ILoginResponse, ISignupResponse, login, signup } from "~/interfaces/sdk/auth";
 import { IAuthUser } from "~/models/users";
 
-const STORAGE_KEY = "auth-user";
+export const STORAGE_KEY = "auth-user";
 
 interface ILoginOptions {
   onSuccess?: (data: ILoginResponse) => void;

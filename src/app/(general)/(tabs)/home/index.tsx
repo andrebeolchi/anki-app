@@ -10,7 +10,7 @@ import { useState } from "react";
 import { FlatList, View } from "react-native";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { Text } from "~/components/ui/text";
 import { useChangeUserDeck } from "~/modules/user-decks";
@@ -19,6 +19,7 @@ import { toast } from "~/components/kit/toast";
 import { IGetUserDecksResponse } from "~/interfaces/sdk/user-deck";
 import { Link } from "expo-router";
 import { withClassName } from "~/lib/with-classname";
+import dayjs from "dayjs";
 
 withClassName([
   LucidePlay,
@@ -27,6 +28,8 @@ withClassName([
   LucideClock,
   LucideFlame,
   LucideGlasses,
+  LucideBookOpen,
+  LucideArchive,
 ])
 
 const UserDeckCard = ({ deck }: { deck: IGetUserDecksResponse }) => {
@@ -65,25 +68,24 @@ const UserDeckCard = ({ deck }: { deck: IGetUserDecksResponse }) => {
           )}
       </CardHeader>
 
-      <CardContent>
-        {deck.enrollment.status === "active" && (
-          <>
-            {deck.enrollment.lastStudyAt && (
-              <View className="flex flex-row items-center justify-between w-full gap-4 mb-4 text-sm text-gray-600">
+      {deck.enrollment.status === "active" && (
+        <>
+          {deck.enrollment.lastStudyAt && (
+            <CardContent>
+              <View className="flex flex-row items-center justify-between w-full text-sm text-muted-foreground">
+                <Text className="text-muted-foreground">
+                  Estudado {dayjs().to(deck.enrollment.lastStudyAt)}
+                </Text>
+
                 <View className="flex flex-row items-center gap-1">
                   <LucideFlame size={16} className="text-muted-foreground" />
-                  <Text>{deck.enrollment.currentStreak} dias</Text>
-                </View>
-
-                <View className="flex flex-row items-center gap-1">
-                  <LucideClock size={16} className="text-muted-foreground" />
-                  <Text className="text-muted-foreground">
-                    {deck.enrollment.lastStudyAt?.toLocaleDateString()}
-                  </Text>
+                  <Text>{deck.enrollment.currentStreak} dia{(deck.enrollment.currentStreak || 0) > 1 && 's'}</Text>
                 </View>
               </View>
-            )}
+            </CardContent>
+          )}
 
+          <CardFooter>
             <View className="flex flex-row w-full gap-2">
               <Link href={`/decks/${deck.id}`} asChild>
                 <Button className="flex flex-row flex-1 gap-3">
@@ -105,10 +107,12 @@ const UserDeckCard = ({ deck }: { deck: IGetUserDecksResponse }) => {
                 <LucideArchive size={20} className="color-black" />
               </Button>
             </View>
-          </>
-        )}
+          </CardFooter>
+        </>
+      )}
 
-        {deck.enrollment.status === "archived" && (
+      {deck.enrollment.status === "archived" && (
+        <CardContent>
           <Button
             variant="outline"
             onPress={() =>
@@ -120,8 +124,8 @@ const UserDeckCard = ({ deck }: { deck: IGetUserDecksResponse }) => {
           >
             <Text>Reativar</Text>
           </Button>
-        )}
-      </CardContent>
+        </CardContent>
+      )}
     </Card>
   );
 };
@@ -130,45 +134,42 @@ export default function HomeScreen() {
   const [tab, setTab] = useState<string>("active");
   const { data: decks } = useGetUserDecks();
 
-  const activeDecks =
-    decks?.filter((deck) => deck.enrollment.status === "active") || [];
-  const archivedDecks =
-    decks?.filter((deck) => deck.enrollment.status === "archived") || [];
+  const activeDecks = decks?.filter((deck) => deck.enrollment.status === "active") || [];
+  const archivedDecks = decks?.filter((deck) => deck.enrollment.status === "archived") || [];
 
   return (
     <Tabs
       value={tab}
       onValueChange={(value) => setTab(value)}
-      className="w-full p-4"
+      className="w-full p-6"
     >
       <TabsList className="flex flex-row w-full mb-6">
         <TabsTrigger
           value="active"
           className="flex flex-row items-center flex-1 gap-2"
         >
-          <LucidePlay className="w-4 h-4" />
+          <LucidePlay size={16} />
           <Text>Ativos ({activeDecks?.length})</Text>
         </TabsTrigger>
         <TabsTrigger
           value="archived"
           className="flex flex-row items-center flex-1 gap-2"
         >
-          <LucideArchive className="w-4 h-4" />
+          <LucideArchive size={16} />
           <Text>Arquivados ({archivedDecks?.length})</Text>
         </TabsTrigger>
       </TabsList>
 
       <TabsContent value="active">
         <FlatList
-          className="gap-4 overflow-visible"
           data={activeDecks}
-          ItemSeparatorComponent={() => <View className="h-4" />}
+          contentContainerClassName="gap-6"
           renderItem={({ item }) => <UserDeckCard key={item.id} deck={item} />}
           ListEmptyComponent={
             <Card className="py-0 text-center">
-              <CardContent className="flex flex-col items-center justify-center gap-4 py-8">
-                <LucideBookOpen size={48} className="mb-4" color="gray" />
-                <Text className="text-xl text-gray-500">Nenhum deck ativo</Text>
+              <CardContent className="flex flex-col items-center justify-center gap-3 py-8">
+                <LucideBookOpen size={48} className="color-muted-foreground" />
+                <Text className="text-xl text-muted-foreground">Nenhum deck ativo</Text>
                 <Link href="/library" asChild>
                   <Button className="w-full">
                     <Text>Procurar decks</Text>
@@ -182,14 +183,13 @@ export default function HomeScreen() {
 
       <TabsContent value="archived">
         <FlatList
-          className="gap-4"
           data={archivedDecks}
-          ItemSeparatorComponent={() => <View className="h-4" />}
+          contentContainerClassName="gap-6"
           renderItem={({ item }) => <UserDeckCard key={item.id} deck={item} />}
           ListEmptyComponent={
             <Card className="py-0 text-center">
-              <CardContent className="flex flex-col items-center justify-center gap-4 py-8">
-                <LucideArchive size={48} className="mb-4" color="gray" />
+              <CardContent className="flex flex-col items-center justify-center gap-3 py-8">
+                <LucideArchive size={48} className="color-muted-foreground" />
                 <Text className="text-xl text-gray-500">
                   Nenhum deck arquivado
                 </Text>
