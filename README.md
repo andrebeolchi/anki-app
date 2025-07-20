@@ -99,7 +99,7 @@ Para persistir os dados no dispositivo, utilizamos o [React Native MMKV](https:/
 Ela também possui suporte ao React Query, o que facilita a integração com o gerenciamento de estado.
 
 ### API
-A API utilizada utilizamos a [Newsee Fastify API](https://github.com/andrebeolchi/anki-back), que é responsável por fornecer os dados para o frontend.
+A API utilizada utilizamos a [Tinnki Fastify API](https://github.com/andrebeolchi/anki-back), que é responsável por fornecer os dados para o frontend.
 
 ### UI
 Para a estilização do frontend, utilizamos [NativeWind](https://www.nativewind.dev/) e [React Native Reusables](https://rnr-docs.vercel.app/getting-started/introduction/), uma reprodução de shadcn/ui para react native.
